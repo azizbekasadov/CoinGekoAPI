@@ -12,7 +12,12 @@ public final class CoinGeckoApi: NSObject, CoinGekoAPIContract {
     private let baseURL: String
     private let service: NetworkServiceProto
     
-    public init(
+    public init(baseURL: String = "https://api.coingecko.com/api/v3",) {
+        self.baseURL = baseURL
+        self.service = NetworkService()
+    }
+    
+    init(
         baseURL: String = "https://api.coingecko.com/api/v3",
         service: NetworkServiceProto = NetworkService()
     ) {

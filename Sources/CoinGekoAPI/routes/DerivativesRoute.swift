@@ -21,16 +21,11 @@ public enum DerivativesRoute: Route {
     public var path: String {
         switch self {
         case .derivativesExchangesList: return "/derivatives/exchanges/list"
-        case .derivatives(let includeTickers): return "/derivatives?include_tickers=\(includeTickers)"
-        case .derivativesExchanges(
-            let order,
-            let perPage,
-            let page
-        ): return "/derivatives/exchanges?order=\(order)&per_page=\(perPage)&page=\(page)"
-        case .derivativesExchangesId(
-            let id,
-            let includeTickers
-        ): return "/derivatives/exchanges/\(id)?include_tickers=\(includeTickers)"
+        case let .derivatives(includeTickers): return "/derivatives?include_tickers=\(includeTickers)"
+        case let .derivativesExchanges(order, perPage, page):
+            return "/derivatives/exchanges?order=\(order)&per_page=\(perPage)&page=\(page)"
+        case let .derivativesExchangesId(id, includeTickers):
+            return "/derivatives/exchanges/\(id)?include_tickers=\(includeTickers)"
         }
     }
 }

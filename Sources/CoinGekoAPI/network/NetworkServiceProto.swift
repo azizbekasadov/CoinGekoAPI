@@ -2,22 +2,22 @@
 
 import Foundation
 
-public protocol NetworkServiceProto {
+protocol NetworkServiceProto {
     func request(
         with route: Route
     ) async throws -> Data
 }
 
-public class NetworkService: NSObject, NetworkServiceProto {
+final class NetworkService: NSObject, NetworkServiceProto {
     private let urlSession: URLSession
     
-    public init(
+    init(
         _ urlSession: URLSession = .shared
     ) {
         self.urlSession = urlSession
     }
     
-    public func request(
+    func request(
         with route: Route
     ) async throws -> Data {
         let path = route.path.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? route.path
@@ -34,7 +34,7 @@ public class NetworkService: NSObject, NetworkServiceProto {
                 throw error
             }
             
-            if statusCode >= 400 {
+            if statusCode >= HTTPStatusCode.badRequest.rawValue {
                 let error = NetworkError.clientError
                 debugPrint(error)
                 throw error
